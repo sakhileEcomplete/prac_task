@@ -3,6 +3,8 @@ name: Docker Build (Cloud)
 on:
   push:
     branches: [ "main", "dev", "new-features" ]
+  pull_request:
+    branches: [ "main", "dev" ]
 
 jobs:
   docker-build:
