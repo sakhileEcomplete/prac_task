@@ -33,4 +33,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/prac-task-app:latest
+          tags: ghcr.io/sakhileecomplete/prac-task-app:latest
