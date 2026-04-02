@@ -3,7 +3,7 @@
 // Import the Task model to interact with the database for task-related operations
 const Tasks  = require("../models/taskModel"); 
 
-exports.getAll = () => async () => {
+exports.getAll = async () => {
     // Retrieve all tasks from the database using the Task model
     return await Tasks.find();
 };

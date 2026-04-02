@@ -5,7 +5,7 @@ require('dotenv').config(); // ✅ load env variables FIRST
 const express = require('express');
 const app = express();
 
-const connectDB = require("./src/config/db");
+const connectDB = require(".config/db");
 connectDB();
 
 app.use(express.json());
@@ -17,7 +17,7 @@ app.use("/tasks", taskRoutes);
 const path = require("path");
 
 // serve frontend
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT || 3000;
