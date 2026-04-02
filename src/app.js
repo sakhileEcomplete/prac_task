@@ -10,6 +10,10 @@ app.use(express.json());
 const taskRoutes = require("./routes/taskRoutes");// Import the task routes to handle requests related to tasks
 app.use("/tasks", taskRoutes);// Use the task routes for any requests to the /tasks endpoint
 
+const path = require("path");
+
+// serve frontend
+app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = 3000;// Define the port to listen on
 
