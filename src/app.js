@@ -1,28 +1,28 @@
-// src/app.js
+// App Bootstrapper - responsible for connecting to the database and starting the server
+require("dotenv").config();
 
-require('dotenv').config(); // ✅ load env variables FIRST
+// connect to the database and start the server
+const connectDB = require("./config/db"); 
+const app = require("./server"); 
 
-const express = require('express');
-const app = express();
-
-const connectDB = require("./config/db");
-
-connectDB();
-
-app.use(express.json());
-
-// routes
-const taskRoutes = require("./routes/taskRoutes");
-app.use("/tasks", taskRoutes);
-
-const path = require("path");
-
-// serve frontend
-app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(path.join(__dirname, "public")));
-
+// port that the server will listen on
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+// Start the server after connecting to the database
+async function start() {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+// Try and Catch to provide a more readable/undestandable error message if the app fails to connect to a Database instead of dumping a full crash stack.
+start().catch((error) => {
+  console.error("Application failed to start.");
+  console.error("Check that MongoDB is running and that MONGO_URI in .env is correct.");
+  console.error(`Startup error: ${error.message}`);
+  process.exit(1); 
 });
+  

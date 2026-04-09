@@ -1,20 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Task Manager</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Momentum Planner</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Task planning workspace</p>
+        <h1>Momentum Planner</h1>
+        <p class="hero-copy">
+          Organize the work ahead with clear deadlines, reminder times, and recurring schedules that keep every task moving.
+        </p>
+      </div>
+      <div class="hero-card">
+        <p class="hero-label">Today's Focus</p>
+        <div class="hero-metrics">
+          <div>
+            <span id="pendingCount">0</span>
+            <small>Pending</small>
+          </div>
+          <div>
+            <span id="progressCount">0</span>
+            <small>In Progress</small>
+          </div>
+          <div>
+            <span id="completedCount">0</span>
+            <small>Completed</small>
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <h1>Task Manager 🚀</h1>
+    <main class="dashboard">
+      <section class="panel composer">
+        <div class="panel-heading">
+          <h2>Create or edit a task</h2>
+          <p>Capture what matters, then anchor it with timing and urgency.</p>
+        </div>
 
-  <input type="text" id="taskInput" placeholder="Enter task..." />
-  <button onclick="addTask()">Add Task</button>
+        <form id="taskForm">
+          <input type="hidden" id="taskId">
 
-  <ul id="taskList"></ul>
+          <label>
+            Task title
+            <input type="text" id="taskInput" placeholder="Prepare investor deck" required>
+          </label>
+
+          <label>
+            Notes
+            <textarea id="taskDetails" rows="4" placeholder="Add context, deliverables, or links to remember."></textarea>
+          </label>
+
+          <div class="grid two">
+            <label>
+              Priority
+              <select id="taskPriority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+
+            <label>
+              Status
+              <select id="taskStatus">
+                <option value="pending" selected>Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="grid two">
+            <label>
+              Deadline
+              <input type="datetime-local" id="taskDeadline">
+            </label>
+
+            <label>
+              Reminder
+              <input type="datetime-local" id="taskReminder">
+            </label>
+          </div>
+
+          <div class="schedule-block">
+            <div class="schedule-heading">
+              <h3>Recurring Schedule</h3>
+              <p>Use this when the task repeats as part of a rhythm.</p>
+            </div>
+
+            <div class="grid three">
+              <label>
+                Frequency
+                <select id="scheduleFrequency">
+                  <option value="none" selected>No repeat</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="custom">Custom label</option>
+                </select>
+              </label>
+
+              <label>
+                Time
+                <input type="time" id="scheduleTime">
+              </label>
+
+              <label>
+                Label
+                <input type="text" id="scheduleLabel" placeholder="Every sprint review">
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>Weekly days</legend>
+              <div class="day-picker">
+                <label><input type="checkbox" value="monday">Mon</label>
+                <label><input type="checkbox" value="tuesday">Tue</label>
+                <label><input type="checkbox" value="wednesday">Wed</label>
+                <label><input type="checkbox" value="thursday">Thu</label>
+                <label><input type="checkbox" value="friday">Fri</label>
+                <label><input type="checkbox" value="saturday">Sat</label>
+                <label><input type="checkbox" value="sunday">Sun</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn" id="submitButton">Save Task</button>
+            <button type="button" class="ghost-btn" id="resetButton">Clear Form</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel board">
+        <div class="panel-heading board-heading">
+          <div>
+            <h2>Task board</h2>
+            <p>Review your queue, upcoming reminders, and what needs attention now.</p>
+          </div>
+          <label class="filter-control">
+            Filter
+            <select id="statusFilter">
+              <option value="all">All tasks</option>
+              <option value="pending">Pending</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="flashMessage" class="flash-message" hidden></div>
+
+        <div class="task-sections">
+          <div>
+            <div class="section-title">
+              <h3>Upcoming reminders</h3>
+              <span id="reminderCount">0</span>
+            </div>
+            <div id="reminderList" class="mini-list empty-state">
+              No reminders scheduled yet.
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">
+              <h3>All tasks</h3>
+              <span id="taskCount">0</span>
+            </div>
+            <div id="taskList" class="task-list empty-state">
+              No tasks yet. Start by creating one on the left.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script src="script.js"></script>
-  <script src="app.js"></script>
-
 </body>
 </html>
